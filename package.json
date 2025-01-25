@@ -1,0 +1,188 @@
+{
+  "name": "ssd-scanner",
+  "displayName": "SSD Scanner",
+  "publisher": "OpsMx",
+  "description": "A VS Code extension for SSD.",
+  "icon": "images/opsmx.png",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.54.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:ssd.cmdview",
+    "onCommand:trivy-vulnerability-scanner.scan",
+    "onCommand:trivy-vulnerability-scanner.explorer-run",
+    "onCommand:trivy-vulnerability-scanner.reset",
+    "onCommand:trivy-vulnerability-scanner.version"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "Trivy",
+      "properties": {
+        "trivy.binaryPath": {
+          "type": "string",
+          "default": "trivy",
+          "description": "Path to Trivy if not already on the PATH"
+        },
+        "trivy.debug": {
+          "type": "boolean",
+          "default": false,
+          "description": "Run Trivy with vebose flag to get more information"
+        },
+        "trivy.secretScanning": {
+          "type": "boolean",
+          "default": false,
+          "description": "Trivy should also scan for secrets, requires Trivy >=v0.27.0"
+        },
+        "trivy.offlineScan": {
+          "type": "boolean",
+          "default": false,
+          "description": "Run Trivy as an offline scan"
+        },
+        "trivy.fixedOnly": {
+          "type": "boolean",
+          "default": false,
+          "description": "Only return Trivy results for vulnerabilities with fixes"
+        },
+        "trivy.server.enable": {
+          "type": "boolean",
+          "default": false,
+          "description": "Connect to a trivy server, on a remote machine"
+        },
+        "trivy.server.url": {
+          "type": "string",
+          "default": "",
+          "description": "The remote trivy URL to connect to"
+        },
+        "trivy.minimumReportedSeverity": {
+          "type": "string",
+          "default": "UNKNOWN",
+          "enum": [
+            "CRITICAL",
+            "HIGH",
+            "MEDIUM",
+            "LOW",
+            "UNKNOWN"
+          ],
+          "description": "Return Trivy results with severity greater than or equal to this setting."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "trivy-vulnerability-scanner.scan",
+        "title": "Trivy Scan"
+      },
+      {
+        "command": "trivy-vulnerability-scanner.dockerscan",
+        "title": "Trivy Docker Scan"
+      },
+      {
+        "command": "trivy-vulnerability-scanner.sbomscan",
+        "title": "Trivy SBOM Scan"
+      },
+      {
+        "command": "trivy-vulnerability-scanner.explorer-run",
+        "title": "Trivy: Run trivy against workspace"
+      },
+      {
+        "command": "trivy-vulnerability-scanner.reset",
+        "title": "Reset",
+        "icon": {
+          "light": "resources/light/refresh.svg",
+          "dark": "resources/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "trivy-vulnerability-scanner.refresh",
+        "title": "Trivy: Refresh the issue list"
+      },
+      {
+        "command": "trivy-vulnerability-scanner.version",
+        "title": "Trivy: Get the current version of Trivy"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "ssd",
+          "title": "SSD",
+          "icon": "media/trivy.svg"
+        }
+      ]
+    },
+    "views": {
+      "ssd": [
+        {
+          "id": "ssd.cmdview",
+          "name": "Findings Explorer",
+          "icon": "media/trivy.svg",
+          "contextualTitle": "Findings Explorer"
+        },
+        {
+          "id": "ssd.helpview",
+          "name": "Findings Help",
+          "type": "webview",
+          "contextualTitle": "Findings Help"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "ssd.cmdview",
+        "contents": "Trivy :\n[Project Scan](command:trivy-vulnerability-scanner.explorer-run)\n[Docker Scan](command:trivy-vulnerability-scanner.dockerscan)\n[SBOM Scan](command:trivy-vulnerability-scanner.sbomscan)"
+      },
+      {
+        "view": "ssd.helpview",
+        "contents": "No check selected. Run Trivy and choose a failed check from the explorer"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "trivy-vulnerability-scanner.reset",
+          "when": "view == ssd.cmdview",
+          "group": "navigation@1"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run esbuild-base -- --minify",
+    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
+    "esbuild": "npm run esbuild-base -- --sourcemap",
+    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+    "test-compile": "tsc -p ./",
+    "compile": "tsc -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.1",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.13.52",
+    "@types/semver": "^7.3.6",
+    "@types/vscode": "^1.54.0",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
+    "esbuild": "^0.14.11",
+    "eslint": "^6.8.0",
+    "glob": "^7.1.6",
+    "mocha": "^11.1.0",
+    "typescript": "^4.5.4",
+    "vscode-test": "^1.5.0"
+  },
+  "repository": {
+    "url": "https://github.com/aquasecurity/trivy-vscode-extension"
+  },
+  "dependencies": {
+    "@types/uuid": "^8.3.4",
+    "semver": "^7.3.5",
+    "typescipt": "^1.0.0",
+    "uuid": "^8.3.2"
+  }
+}

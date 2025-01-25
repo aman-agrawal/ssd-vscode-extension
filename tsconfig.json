@@ -1,0 +1,23 @@
+{
+	"compilerOptions": {
+		"incremental": true,
+		"target": "es6",
+		"module": "commonjs",
+		"sourceMap": true,
+		"outDir": "./out",
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedIndexedAccess": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true
+	},
+	"exclude": [
+		"node_modules",
+		".vscode-test"
+	]
+}
