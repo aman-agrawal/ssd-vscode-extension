@@ -104,6 +104,10 @@
       {
         "command": "trivy-vulnerability-scanner.version",
         "title": "Trivy: Get the current version of Trivy"
+      },
+      {
+        "command": "semgrep-vulnerability-scanner.projectscan",
+        "title": "Semgrep: Project Scan"
       }
     ],
     "viewsContainers": {
@@ -134,7 +138,7 @@
     "viewsWelcome": [
       {
         "view": "ssd.cmdview",
-        "contents": "Trivy :\n[Project Scan](command:trivy-vulnerability-scanner.explorer-run)\n[Docker Scan](command:trivy-vulnerability-scanner.dockerscan)\n[SBOM Scan](command:trivy-vulnerability-scanner.sbomscan)"
+        "contents": "Trivy :\n[Project Scan](command:trivy-vulnerability-scanner.explorer-run)\n[Docker Scan](command:trivy-vulnerability-scanner.dockerscan)\n[SBOM Scan](command:trivy-vulnerability-scanner.sbomscan)\n[Semgrep Scan](command:semgrep-vulnerability-scanner.projectscan)"
       },
       {
         "view": "ssd.helpview",

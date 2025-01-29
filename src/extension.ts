@@ -4,6 +4,7 @@ import * as vscode from "vscode";
 import { TrivyHelpProvider } from "./explorer/trivy_helpview";
 import { TrivyTreeViewProvider } from "./explorer/trivy_treeview";
 import { TrivyWrapper } from "./trivy_wrapper";
+import { SemgrepWrapper } from "./semgrep_wrapper";
 
 export function runCommand(command: string, projectRootPath: string): string {
   var child_process = require("child_process");
@@ -48,6 +49,7 @@ export function activate(context: vscode.ExtensionContext) {
   const helpProvider = new TrivyHelpProvider();
   const misconfigProvider = new TrivyTreeViewProvider(context);
   const trivyWrapper = new TrivyWrapper(outputChannel, misconfigProvider.resultsStoragePath);
+  const semgrepWrapper = new SemgrepWrapper();
 
   // creating the issue tree explicitly to allow access to events
   let issueTree = vscode.window.createTreeView("ssd.cmdview", {
@@ -64,6 +66,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(issueTree);
   context.subscriptions.push(vscode.window.registerWebviewViewProvider("ssd.helpview", helpProvider));
+  context.subscriptions.push(vscode.commands.registerCommand("semgrep-vulnerability-scanner.projectscan", () => semgrepWrapper.run(context)));
   context.subscriptions.push(vscode.commands.registerCommand("trivy-vulnerability-scanner.explorer-run", () => trivyWrapper.run()));
   context.subscriptions.push(vscode.commands.registerCommand("trivy-vulnerability-scanner.dockerscan", () => trivyWrapper.scanArtifact('docker')));
   context.subscriptions.push(vscode.commands.registerCommand("trivy-vulnerability-scanner.sbomscan", () => trivyWrapper.scanArtifact('sbom')));
