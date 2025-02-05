@@ -50,7 +50,6 @@ export class TrivyTreeViewProvider implements vscode.TreeDataProvider<TrivyTreeI
 			var files = fs.readdirSync(this.resultsStoragePath).filter(fn => fn.endsWith('_results.json') || fn.endsWith('_results.json.json'));
 			Promise.resolve(files.forEach(file => {
 				const resultFile = path.join(this.resultsStoragePath, file);
-				vscode.window.showErrorMessage(resultFile);
 				if (fs.existsSync(resultFile)) {
 					let content = fs.readFileSync(resultFile, 'utf8');
 					try {

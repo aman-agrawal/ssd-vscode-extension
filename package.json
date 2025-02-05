@@ -138,7 +138,7 @@
     "viewsWelcome": [
       {
         "view": "ssd.cmdview",
-        "contents": "Trivy :\n[Project Scan](command:trivy-vulnerability-scanner.explorer-run)\n[Docker Scan](command:trivy-vulnerability-scanner.dockerscan)\n[SBOM Scan](command:trivy-vulnerability-scanner.sbomscan)\n[Semgrep Scan](command:semgrep-vulnerability-scanner.projectscan)"
+        "contents": "[Trivy Project Scan](command:trivy-vulnerability-scanner.explorer-run)\n[Trivy Docker Scan](command:trivy-vulnerability-scanner.dockerscan)\n[Trivy SBOM Scan](command:trivy-vulnerability-scanner.sbomscan)\n[Semgrep Project Scan](command:semgrep-vulnerability-scanner.projectscan)"
       },
       {
         "view": "ssd.helpview",

@@ -51,6 +51,7 @@ export class TrivyWrapper {
                 vscode.window.showErrorMessage('Docker image name is required');
                 return [];
             }
+            vscode.window.showInformationMessage('Running Trivy scan on docker image...');
             command = this.buildCommand(dockerImage, 'image');
         } else if (scanType === 'sbom') {
             const sbomFilePath = await vscode.window.showInputBox({
@@ -62,9 +63,9 @@ export class TrivyWrapper {
                 vscode.window.showErrorMessage('SBOM file path is required');
                 return [];
             }
+            vscode.window.showInformationMessage('Running Trivy scan on sbom file...');
             command = this.buildCommand(sbomFilePath, 'sbom');
         }
-        vscode.window.showInformationMessage(`cmd: ${command}`);
         this.outputChannel.appendLine(`command: ${command}`);
 
         const binary = this.getBinaryPath();
@@ -89,11 +90,11 @@ export class TrivyWrapper {
         });
     }
 
-
     run() {
         let outputChannel = this.outputChannel;
         this.outputChannel.appendLine("");
         this.outputChannel.appendLine("Running Trivy to update results");
+        vscode.window.showInformationMessage('Running Trivy scan on project...');
 
         if (!this.checkTrivyInstalled()) {
             return;
